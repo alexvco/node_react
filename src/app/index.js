@@ -18,7 +18,7 @@ var TodoComponent = CreateReactClass({
         <h1>Hello</h1>
         <p>Ninja</p>
         <p>{this.props.mssg}</p>
-        <p>{this.props.cheese.name}</p>
+        <p>{this.props.cheese.price}</p>
       </div>
     );
   }
@@ -28,7 +28,7 @@ var TodoComponent = CreateReactClass({
 // Insert component into html page (this is where ReactDOM is used)
 // The line below will render the TodoComponent in the DOM, 
 // first argument is the component, second argument is the location where we insert this component
-ReactDOM.render(<TodoComponent />, document.getElementById('todo-wrapper'));
+// ReactDOM.render(<TodoComponent />, document.getElementById('todo-wrapper'));
 
 
 // Props short for properties, are a way for us to pass data into our components which we want to display on the webpage to the user.
@@ -39,6 +39,6 @@ ReactDOM.render(<TodoComponent />, document.getElementById('todo-wrapper'));
 // When we use a variable or object to pass it in as a property we use the {} and dont need the "" anymore.
 // this in the component is to reference this component.
 
-var myCheese = {name: 'Camembert'};
+var myCheese = {name: 'Camembert', smellFactor: 'extreme', price: '3.5'};
 
 ReactDOM.render(<TodoComponent mssg="hav" cheese={myCheese} />, document.getElementById('todo-wrapper'));
