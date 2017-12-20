@@ -152,6 +152,74 @@ var CreateReactClass = require('create-react-class');
 //-------------------------------------------------------NESTED COMPONENTS-----------------------------------------------------------------//
 
 
+// var TodoComponent = CreateReactClass({
+  
+//   getInitialState: function(){
+//     return {
+//       todos: ['wash up', 'eat breakfast', 'take a nap'],
+//       age: 30
+//     }
+//   },
+
+//   render: function(){
+
+//     var mytodos = this.state.todos.map(function(item, index){
+//       return(
+//         <TodoItem myitem={item} key={index} />
+//       );
+//     });
+
+//     return(
+//       <div id="todo-list">
+//         <p>The business people have the most leisure</p>
+//         <p>{this.state.age}</p>
+//         <ul>
+//           {mytodos}
+//         </ul>
+
+//       </div>
+//     );
+//   }// render
+
+// });// TodoComponent
+
+
+// // Create TodoItem component
+// var TodoItem = CreateReactClass({
+//   render: function(){
+//     return(
+//       <li>
+//         <div className="todo-item">
+//           <span className="item-name">{this.props.myitem}</span>
+//         </div>
+//       </li>
+//     )
+//   }
+// })
+
+
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+// // We will map out this nested TodoItem component for each element in the array 
+// // React strongly recommends adding a unique key property for each component, since all items in the todo array will have the same component name
+// // So instead of outputting li's like we did in the previous section, we output new components for each item in the array
+// // And hence there lies the li inside the component, so now each item in the array is a React component with a unique key prop that contains the li tag.
+// // className is React's way (JSX) of adding a class to an element
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------EVENTS IN REACT-----------------------------------------------------------------//
+
+//React Events -> https://reactjs.org/docs/events.html
+
+
 var TodoComponent = CreateReactClass({
   
   getInitialState: function(){
@@ -171,7 +239,7 @@ var TodoComponent = CreateReactClass({
 
     return(
       <div id="todo-list">
-        <p>The business people have the most leisure</p>
+        <p onClick={this.uclicked}>The business people have the most leisure</p>
         <p>{this.state.age}</p>
         <ul>
           {mytodos}
@@ -179,7 +247,12 @@ var TodoComponent = CreateReactClass({
 
       </div>
     );
-  }// render
+  },// render
+
+  // Custom functions
+  uclicked: function(){
+    console.log('you clicked me');
+  }
 
 });// TodoComponent
 
@@ -199,20 +272,6 @@ var TodoItem = CreateReactClass({
 
 
 ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
-
-
-// We will map out this nested TodoItem component for each element in the array 
-// React strongly recommends adding a unique key property for each component, since all items in the todo array will have the same component name
-// So instead of outputting li's like we did in the previous section, we output new components for each item in the array
-// And hence there lies the li inside the component, so now each item in the array is a React component with a unique key prop that contains the li tag.
-// className is React's way (JSX) of adding a class to an element
-
-
-
-
-
-
-
 
 
 
