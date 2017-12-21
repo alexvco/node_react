@@ -434,3 +434,80 @@ var CreateReactClass = require('create-react-class');
 
 
 
+
+
+
+//-------------------------------------------------------Adding items to our todo (input references)-----------------------------------------------------------------//
+
+
+
+// Module requires
+var TodoItem = require('./todoItem');
+var AddItem = require('./addItem');
+require('./css/index.css');
+
+var TodoComponent = CreateReactClass({
+  
+  getInitialState: function(){
+    return {
+      todos: ['wash up', 'eat breakfast', 'take a nap'],
+      age: 30
+    }
+  },//getInitialState
+
+  render: function(){
+    var mytodos = this.state.todos.map(function(item, index){
+      return(
+        <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
+      );
+    }.bind(this));
+
+    return(
+      <div id="todo-list">
+        <p>The business people have the most leisure</p>
+        <p>{this.state.age}</p>
+        <ul>
+          {mytodos}
+        </ul>
+        <AddItem myAdd={this.onAdd} />
+      </div>
+    );
+  },// render
+
+  // Custom functions
+  onDelete: function(item){
+    var updatedTodos = this.state.todos.filter(function(val, index){
+      return item !== val; // this will return all items that are not equal to the item we want to delete
+    });
+    this.setState({ //this is how we change the state of the component
+      todos: updatedTodos
+    });
+  },
+
+  onAdd: function(item){
+    var updatedTodos = this.state.todos;
+    updatedTodos.push(item);
+    this.setState({
+      todos: updatedTodos
+    })
+  }
+
+});// TodoComponent
+
+
+ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+// We will need to create a new component for the form
+// When the user clicks add, it will fire up an event to add the data to our todos (aka in the state of the parent component)
+// the way we are going to grab that data from this input field is by using input refs
+// We will nest this AddItem component (aka a static, stateless class) into our TodoComponent
+// We will add an onSubmit event handler, which will grab the input ref, and its going to pass it back up into
+// the parent component (TodoComponent), which is going to add that item to the data in state in the todos array
+// In React we can use ref="something" on an input field, which can act like an id from which we can grab its value
+// We access it by saying this.refs.something or its value by this.refs.something
+// The way we are going to do this is by creating a function in the TodoComponent that will pass down as a prop into our AddItem component, so that we can use it and alter the todos data
+
+
+
+
