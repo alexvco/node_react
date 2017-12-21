@@ -283,79 +283,154 @@ var CreateReactClass = require('create-react-class');
 
 //-------------------------------------------------------EVENTS IN NESTED COMPONENTS-----------------------------------------------------------------//
 
-// When we click on an item we want to delete it from our ul.
+// // When we click on an item we want to delete it from our ul.
 
 
-var TodoComponent = CreateReactClass({
+// var TodoComponent = CreateReactClass({
   
-  getInitialState: function(){
-    return {
-      todos: ['wash up', 'eat breakfast', 'take a nap'],
-      age: 30
-    }
-  },//getInitialState
+//   getInitialState: function(){
+//     return {
+//       todos: ['wash up', 'eat breakfast', 'take a nap'],
+//       age: 30
+//     }
+//   },//getInitialState
 
-  render: function(){
-    var mytodos = this.state.todos.map(function(item, index){
-      return(
-        <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
-      );
-    }.bind(this));
+//   render: function(){
+//     var mytodos = this.state.todos.map(function(item, index){
+//       return(
+//         <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
+//       );
+//     }.bind(this));
 
-    return(
-      <div id="todo-list">
-        <p>The business people have the most leisure</p>
-        <p>{this.state.age}</p>
-        <ul>
-          {mytodos}
-        </ul>
-      </div>
-    );
-  },// render
+//     return(
+//       <div id="todo-list">
+//         <p>The business people have the most leisure</p>
+//         <p>{this.state.age}</p>
+//         <ul>
+//           {mytodos}
+//         </ul>
+//       </div>
+//     );
+//   },// render
 
-  // Custom functions
-  onDelete: function(item){
-    var updatedTodos = this.state.todos.filter(function(val, index){
-      return item !== val; // this will return all items that are not equal to the item we want to delete
-    });
-    this.setState({ //this is how we change the state of the component
-      todos: updatedTodos
-    });
-  }
+//   // Custom functions
+//   onDelete: function(item){
+//     var updatedTodos = this.state.todos.filter(function(val, index){
+//       return item !== val; // this will return all items that are not equal to the item we want to delete
+//     });
+//     this.setState({ //this is how we change the state of the component
+//       todos: updatedTodos
+//     });
+//   }
 
-});// TodoComponent
+// });// TodoComponent
 
-// Create TodoItem component
-var TodoItem = CreateReactClass({
-  render: function(){
-    return(
-      <li>
-        <div className="todo-item">
-          <span className="item-name">{this.props.myitem}</span>
-          <span className="item-delete" onClick={this.handleDelete}> x </span>
-        </div>
-      </li>
-    );
-  },
+// // Create TodoItem component
+// var TodoItem = CreateReactClass({
+//   render: function(){
+//     return(
+//       <li>
+//         <div className="todo-item">
+//           <span className="item-name">{this.props.myitem}</span>
+//           <span className="item-delete" onClick={this.handleDelete}> x </span>
+//         </div>
+//       </li>
+//     );
+//   },
 
-  handleDelete: function(){
-    this.props.myDelete(this.props.myitem);
-  }
+//   handleDelete: function(){
+//     this.props.myDelete(this.props.myitem);
+//   }
 
-});// TodoItem component
-
-
-ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+// });// TodoItem component
 
 
-// The individual items are in the TodoItem component, so that's where the click event should happen
-// When someone clicks on the x, handleDelete function is going to fire.
-// We want this function to delete whatever item we clicked on from the mytodos array
-// The data however is stored in the state of the TodoComponent, the parent component
-// So what we need to do is pass this handleDelete event back to the parent (TodoComponent), 
-// to another function in the TodoComponent so that this other function can delete the item from the state
-// because we can't directly delete it from this nested component, so we need to find a way to pass this item back up to the TodoComponent so we can delete that item
-// So the way we are going to do that is by passing a function (onDelete) which we will create in the TodoComponent as a prop down to the TodoItem component, so that we can access that function.
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+// // The individual items are in the TodoItem component, so that's where the click event should happen
+// // When someone clicks on the x, handleDelete function is going to fire.
+// // We want this function to delete whatever item we clicked on from the mytodos array
+// // The data however is stored in the state of the TodoComponent, the parent component
+// // So what we need to do is pass this handleDelete event back to the parent (TodoComponent), 
+// // to another function in the TodoComponent so that this other function can delete the item from the state
+// // because we can't directly delete it from this nested component, so we need to find a way to pass this item back up to the TodoComponent so we can delete that item
+// // So the way we are going to do that is by passing a function (onDelete) which we will create in the TodoComponent as a prop down to the TodoItem component, so that we can access that function.
+
+
+
+
+
+//-------------------------------------------------------Modularizing Our Code-----------------------------------------------------------------//
+
+
+
+// // Module requires
+// var TodoItem = require('./todoItem');
+// require('./css/index.css');
+
+// var TodoComponent = CreateReactClass({
+  
+//   getInitialState: function(){
+//     return {
+//       todos: ['wash up', 'eat breakfast', 'take a nap'],
+//       age: 30
+//     }
+//   },//getInitialState
+
+//   render: function(){
+//     var mytodos = this.state.todos.map(function(item, index){
+//       return(
+//         <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
+//       );
+//     }.bind(this));
+
+//     return(
+//       <div id="todo-list">
+//         <p>The business people have the most leisure</p>
+//         <p>{this.state.age}</p>
+//         <ul>
+//           {mytodos}
+//         </ul>
+//       </div>
+//     );
+//   },// render
+
+//   // Custom functions
+//   onDelete: function(item){
+//     var updatedTodos = this.state.todos.filter(function(val, index){
+//       return item !== val; // this will return all items that are not equal to the item we want to delete
+//     });
+//     this.setState({ //this is how we change the state of the component
+//       todos: updatedTodos
+//     });
+//   }
+
+// });// TodoComponent
+
+
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+// // Modularizing our code -> split it up into separate modules so that we can keep on top of it better
+// // Ideally we want to give each component its own module 
+// // The parent component can stay in the index file because thats kind of like the root component
+// // So we will move the TodoItem out of this file and into a separate component file
+// // Once moved into new file, we need to tell this index file that we require to use the TodoItem component as well
+// // So we will do module requires, we can do the requires because we are using webpack
+// // We also need to export what we want to be available in this index.js file
+// // We also need to require React in our todoItem.js file, since we are using React and CreateReactClass in this file as well
+// // Everything still works but our code is more manageable and maintainable
+
+// // We will do the same with the css, we will insert them where we need them
+// // Basically compartmentalize and load the css into each component when its rendered in the DOM, 
+// // Essentially each component will have its own css file, just like it has its own js file rather than just one big file
+// // We can import css into javascript files, then insert that css into the DOM
+// // To import a css file into this file, you do a require similar to js requires, however we need to put the .css extension
+// // You need to install the css loaders, npm install style-loader css-loader --save-dev
+
+
+
 
 
 
