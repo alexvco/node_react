@@ -217,7 +217,73 @@ var CreateReactClass = require('create-react-class');
 
 //-------------------------------------------------------EVENTS IN REACT-----------------------------------------------------------------//
 
-//React Events -> https://reactjs.org/docs/events.html
+// //React Events -> https://reactjs.org/docs/events.html
+
+
+// var TodoComponent = CreateReactClass({
+  
+//   getInitialState: function(){
+//     return {
+//       todos: ['wash up', 'eat breakfast', 'take a nap'],
+//       age: 30
+//     }
+//   },
+
+//   render: function(){
+
+//     var mytodos = this.state.todos.map(function(item, index){
+//       return(
+//         <TodoItem myitem={item} key={index} />
+//       );
+//     });
+
+//     return(
+//       <div id="todo-list">
+//         <p onClick={this.uclicked}>The business people have the most leisure</p>
+//         <p>{this.state.age}</p>
+//         <ul>
+//           {mytodos}
+//         </ul>
+
+//       </div>
+//     );
+//   },// render
+
+//   // Custom functions
+//   uclicked: function(){
+//     console.log('you clicked me');
+//   }
+
+// });// TodoComponent
+
+
+// // Create TodoItem component
+// var TodoItem = CreateReactClass({
+//   render: function(){
+//     return(
+//       <li>
+//         <div className="todo-item">
+//           <span className="item-name">{this.props.myitem}</span>
+//         </div>
+//       </li>
+//     )
+//   }
+// })
+
+
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------EVENTS IN NESTED COMPONENTS-----------------------------------------------------------------//
+
+// When we click on an item we want to delete it from our ul.
 
 
 var TodoComponent = CreateReactClass({
@@ -227,35 +293,37 @@ var TodoComponent = CreateReactClass({
       todos: ['wash up', 'eat breakfast', 'take a nap'],
       age: 30
     }
-  },
+  },//getInitialState
 
   render: function(){
-
     var mytodos = this.state.todos.map(function(item, index){
       return(
-        <TodoItem myitem={item} key={index} />
+        <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
       );
-    });
+    }.bind(this));
 
     return(
       <div id="todo-list">
-        <p onClick={this.uclicked}>The business people have the most leisure</p>
+        <p>The business people have the most leisure</p>
         <p>{this.state.age}</p>
         <ul>
           {mytodos}
         </ul>
-
       </div>
     );
   },// render
 
   // Custom functions
-  uclicked: function(){
-    console.log('you clicked me');
+  onDelete: function(item){
+    var updatedTodos = this.state.todos.filter(function(val, index){
+      return item !== val; // this will return all items that are not equal to the item we want to delete
+    });
+    this.setState({ //this is how we change the state of the component
+      todos: updatedTodos
+    });
   }
 
 });// TodoComponent
-
 
 // Create TodoItem component
 var TodoItem = CreateReactClass({
@@ -264,24 +332,30 @@ var TodoItem = CreateReactClass({
       <li>
         <div className="todo-item">
           <span className="item-name">{this.props.myitem}</span>
+          <span className="item-delete" onClick={this.handleDelete}> x </span>
         </div>
       </li>
-    )
+    );
+  },
+
+  handleDelete: function(){
+    this.props.myDelete(this.props.myitem);
   }
-})
+
+});// TodoItem component
 
 
 ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
 
 
-
-
-
-
-
-
-
-
+// The individual items are in the TodoItem component, so that's where the click event should happen
+// When someone clicks on the x, handleDelete function is going to fire.
+// We want this function to delete whatever item we clicked on from the mytodos array
+// The data however is stored in the state of the TodoComponent, the parent component
+// So what we need to do is pass this handleDelete event back to the parent (TodoComponent), 
+// to another function in the TodoComponent so that this other function can delete the item from the state
+// because we can't directly delete it from this nested component, so we need to find a way to pass this item back up to the TodoComponent so we can delete that item
+// So the way we are going to do that is by passing a function (onDelete) which we will create in the TodoComponent as a prop down to the TodoItem component, so that we can access that function.
 
 
 
