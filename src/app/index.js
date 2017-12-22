@@ -441,6 +441,197 @@ var CreateReactClass = require('create-react-class');
 
 
 
+// // Module requires
+// var TodoItem = require('./todoItem');
+// var AddItem = require('./addItem');
+// require('./css/index.css');
+
+// var TodoComponent = CreateReactClass({
+  
+//   getInitialState: function(){
+//     return {
+//       todos: ['wash up', 'eat breakfast', 'take a nap'],
+//       age: 30
+//     }
+//   },//getInitialState
+
+//   render: function(){
+//     var mytodos = this.state.todos.map(function(item, index){
+//       return(
+//         <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
+//       );
+//     }.bind(this));
+
+//     return(
+//       <div id="todo-list">
+//         <p>The business people have the most leisure</p>
+//         <p>{this.state.age}</p>
+//         <ul>
+//           {mytodos}
+//         </ul>
+//         <AddItem myAdd={this.onAdd} />
+//       </div>
+//     );
+//   },// render
+
+//   // Custom functions
+//   onDelete: function(item){
+//     var updatedTodos = this.state.todos.filter(function(val, index){
+//       return item !== val; // this will return all items that are not equal to the item we want to delete
+//     });
+//     this.setState({ //this is how we change the state of the component
+//       todos: updatedTodos
+//     });
+//   },
+
+//   onAdd: function(item){
+//     var updatedTodos = this.state.todos;
+//     updatedTodos.push(item);
+//     this.setState({
+//       todos: updatedTodos
+//     })
+//   }
+
+// });// TodoComponent
+
+
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+// We will need to create a new component for the form
+// When the user clicks add, it will fire up an event to add the data to our todos (aka in the state of the parent component)
+// the way we are going to grab that data from this input field is by using input refs
+// We will nest this AddItem component (aka a static, stateless class) into our TodoComponent
+// We will add an onSubmit event handler, which will grab the input ref, and its going to pass it back up into
+// the parent component (TodoComponent), which is going to add that item to the data in state in the todos array
+// In React we can use ref="something" on an input field, which can act like an id from which we can grab its value
+// We access it by saying this.refs.something or its value by this.refs.something
+// The way we are going to do this is by creating a function in the TodoComponent that will pass down as a prop into our AddItem component, so that we can use it and alter the todos data
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------Component Life-cycle methods-----------------------------------------------------------------//
+
+
+
+// // Module requires
+// var TodoItem = require('./todoItem');
+// var AddItem = require('./addItem');
+// require('./css/index.css');
+
+// var TodoComponent = CreateReactClass({
+  
+//   getInitialState: function(){
+//     return {
+//       todos: ['wash up', 'eat breakfast', 'take a nap'],
+//       age: 30
+//     }
+//   },//getInitialState
+
+//   render: function(){
+//     var mytodos = this.state.todos.map(function(item, index){
+//       return(
+//         <TodoItem myitem={item} key={index} myDelete={this.onDelete} />
+//       );
+//     }.bind(this));
+
+//     return(
+//       <div id="todo-list">
+//         <p>The business people have the most leisure</p>
+//         <p>{this.state.age}</p>
+//         <ul>
+//           {mytodos}
+//         </ul>
+//         <AddItem myAdd={this.onAdd} />
+//       </div>
+//     );
+//   },// render
+
+//   // Custom functions
+//   onDelete: function(item){
+//     var updatedTodos = this.state.todos.filter(function(val, index){
+//       return item !== val; // this will return all items that are not equal to the item we want to delete
+//     });
+//     this.setState({ //this is how we change the state of the component
+//       todos: updatedTodos
+//     });
+//   },
+
+//   onAdd: function(item){
+//     var updatedTodos = this.state.todos;
+//     updatedTodos.push(item);
+//     this.setState({
+//       todos: updatedTodos
+//     })
+//   },
+
+
+//   // lifecycle functions
+//   componentWillMount: function(){
+//     console.log('componentWillMount');
+//   },
+
+//   componentDidMount: function(){
+//     console.log('componentDidMount');
+//     //any grabbing of external data
+//   },
+
+//   componentWillUpdate: function(){
+//     console.log('componentWillUpdate');
+//   },
+
+// });// TodoComponent
+
+
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+
+
+// // getInitialState and render are 2 different life-cycle functions, 
+// // basically they happen at a particular point in time during the life cycle of this component
+// // They dont just fire all at once, react doesnt do that, they fire in a particular order
+// // getInitialState fires before render, and it sets up the state of the component
+// // then render fires, and it renders the code to the browser using the data in the initial state
+// // There are many more life-cycle functions which make up the component life-cycle
+
+// // Mounting Lifecycle Functions (these are functions that occur when a component is mounted to the DOM, aka when the DOM is loaded/ready or page refresh)
+// // 1. getInitialState        -> Set the initial state of the component, sets up the initial data
+// // 2. componentWillMount     -> Any last minute prep before component mounts, called right before render
+// // 3. Render                 -> Returns HTML to add to the DOM, the only required function
+// // 4. componentDidMount      -> Fires after component mounts to the DOM, Good place to load in external data
+
+
+// // We also have Updating Lifecycle Functions (these fire when the DOM is changed/updated, when we add or delete a todo)
+// // 1. componentWillReceiveProps    -> Called before a component receives any new props, can compare the current and new props and change state
+// // 2. shouldComponentUpdate        -> Basically if we dont want to update the component we return false and it wont fire the remaining 3 functions, otherwise return true
+// // 3. componentWillUpdate          -> We can do last minute preps before the component is rendered
+// // 4. render
+// // 5. componentDidUpdate           -> Operate on the DOM or perform network requests, similar to componentDidMount
+
+
+// // You can read more about component life-cycle on react official docs
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------Routing-----------------------------------------------------------------//
+
+
+
 // Module requires
 var TodoItem = require('./todoItem');
 var AddItem = require('./addItem');
@@ -490,7 +681,22 @@ var TodoComponent = CreateReactClass({
     this.setState({
       todos: updatedTodos
     })
-  }
+  },
+
+
+  // lifecycle functions
+  componentWillMount: function(){
+    console.log('componentWillMount');
+  },
+
+  componentDidMount: function(){
+    console.log('componentDidMount');
+    //any grabbing of external data
+  },
+
+  componentWillUpdate: function(){
+    console.log('componentWillUpdate');
+  },
 
 });// TodoComponent
 
@@ -498,15 +704,9 @@ var TodoComponent = CreateReactClass({
 ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
 
 
-// We will need to create a new component for the form
-// When the user clicks add, it will fire up an event to add the data to our todos (aka in the state of the parent component)
-// the way we are going to grab that data from this input field is by using input refs
-// We will nest this AddItem component (aka a static, stateless class) into our TodoComponent
-// We will add an onSubmit event handler, which will grab the input ref, and its going to pass it back up into
-// the parent component (TodoComponent), which is going to add that item to the data in state in the todos array
-// In React we can use ref="something" on an input field, which can act like an id from which we can grab its value
-// We access it by saying this.refs.something or its value by this.refs.something
-// The way we are going to do this is by creating a function in the TodoComponent that will pass down as a prop into our AddItem component, so that we can use it and alter the todos data
+// So far our application consists only of this 1 view or 1 page, but we might have several different pages we want to show to the user
+
+
 
 
 
