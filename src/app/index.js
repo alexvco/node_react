@@ -630,12 +630,34 @@ var CreateReactClass = require('create-react-class');
 
 //-------------------------------------------------------Routing-----------------------------------------------------------------//
 
-
+// ES2015 syntax to import components from 'react-router'
+// import { Router, Route, browserHistory } from 'react-router'; //Note there have been changes for v4+ and hence i am using the following line, 
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'; //You need this for react-router v4 +
+// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom
 
 // Module requires
 var TodoItem = require('./todoItem');
 var AddItem = require('./addItem');
+var About = require('./about');
+
+
 require('./css/index.css');
+
+
+// SETUP ROUTING
+var App = CreateReactClass({
+  render: function(){
+    return(
+      <Router>
+        <Switch>   
+          <Route exact={true} path={'/'} component={TodoComponent}></Route>
+          <Route path={'/about'} component={About}></Route>
+        </Switch>
+      </Router>
+    );
+  }
+});
+
 
 var TodoComponent = CreateReactClass({
   
@@ -656,6 +678,8 @@ var TodoComponent = CreateReactClass({
     return(
       <div id="todo-list">
         <p>The business people have the most leisure</p>
+        <p><a href="/about">About Page</a></p>
+        <Link to={'/about'}>Different link to about page</Link>
         <p>{this.state.age}</p>
         <ul>
           {mytodos}
@@ -696,18 +720,74 @@ var TodoComponent = CreateReactClass({
 
   componentWillUpdate: function(){
     console.log('componentWillUpdate');
-  },
+  }
 
 });// TodoComponent
 
 
-ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+// ReactDOM.render(<TodoComponent mssg="hav" />, document.getElementById('todo-wrapper'));
+ReactDOM.render(<App />, document.getElementById('todo-wrapper'));
 
 
 // So far our application consists only of this 1 view or 1 page, but we might have several different pages we want to show to the user
+// To control different views/pages, we can use routing on the front end in React, 
+// we can do this on the server as well, but alot of time we would like to do this on the front end
+// React router is not automatically installed with react, we need to install that separately for us to use it.  
+// npm install react-router --save
+// Once installed react router gives us 2 components to work with
+// 1. The router component which keeps the url in sync with the UI of the application
+// 2. The route component which is going to match our routes to the app component
+// This time we will use ES2015 to import react router
+// The way i like to setup routes is by creating new react class (called App in this case)
+// And the JSX that we are going to return is going to be our routes (see return above)
+// Inside the Route tags we can attach attributes, to say how we want them to work
+// For example how we want each Route to render a different component
+// So if I wanted a Route which matches the root path ('/') and we also need to put the component we want to render, -> <Route path={'/'} component={TodoComponent}></Route>
+// Next we need to go to package.json and basically add to our build a history-api-fallback flag
+// "build": "webpack -d && webpack-dev-server --content-base src/ --inline --hot --port 1234 --history-api-fallback"
+// So what that is going to do is, when we type a route in the url, it will look in the server for that route,
+// and if that route cant be found, then its going to fall back to the index page, where our App component is being rendered
+// ReactDOM.render(<App />, document.getElementById('todo-wrapper'));
+// When we hit a 404, for example /about which does not exist yet, 
+// it will return this index file to us and then React is going to pick up that route and render the About component in the todo-wrapper id
+// There's 1 more thing we need to import and that's the browserHistory, (note this is only for react-router v3, for v4 check syntax above)
+// which is used to keep track of the forward and back buttons in your browser (note: react-router v3, for v4 check syntaxt above)
+// So now when we go to '/', it will render the TodoComponent and when you go to '/about', it will render the About component only aka the "about" page.
+
+// Now we can go to the about page by creating an a tag with an href='/about'
+// but in this example we will use a different way/trick which is useful if you are using hashHistory instead of browserHistory
+// but sometimes you might want to just use this way instead of anchor tags 
+
+// The basic difference is that the hashHistory uses URLs like: 
+// http://myurl.com/#page/another_page/another_page
+
+// With BrowserHistory you get normal urls (no hash): 
+// http://myurl.com/page/another_page/another_page
+
+// In order to use this different way trick,
+// We are now going to require the Link module as well
+// This will allow us to link to different views or different components if you like within the application
+// Check syntax for Link above and in the about.js file
 
 
 
+
+
+
+
+
+
+
+
+// // Syntax for importing react modules
+
+// // using ES6 modules
+// import { BrowserRouter, Route, Link } from 'react-router-dom'
+
+// // using CommonJS modules
+// var BrowserRouter = require('react-router-dom').BrowserRouter
+// var Route = require('react-router-dom').Route
+// var Link = require('react-router-dom').Link
 
 
 
